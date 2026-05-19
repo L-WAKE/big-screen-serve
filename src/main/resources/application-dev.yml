@@ -1,16 +1,19 @@
-#dev环境  mysql7.0
+#dev环境  MySQL8.0
 spring:
   datasource:
-    driver-class-name: org.sqlite.JDBC
-    url: jdbc:sqlite:D:\\eclipse-workspace\v2-goview-bate\sqllite\goview.db
-    #linux服务器
-    #url: jdbc:sqlite://home/cqfy/project/OSSDATABASE/oss.db
-    username: 
-    password: 
-    ### 连接池配置
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/goview?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    ### Druid连接池配置
     druid:
       initial-size: 10
       max-active: 100
       min-idle: 30
-      max-wait: 40
+      max-wait: 40000
       validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000

@@ -1,0 +1,45 @@
+CREATE DATABASE IF NOT EXISTS goview DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE goview;
+
+CREATE TABLE IF NOT EXISTS t_sys_user (
+  id VARCHAR(64) NOT NULL PRIMARY KEY,
+  username VARCHAR(64) DEFAULT NULL,
+  password VARCHAR(128) DEFAULT NULL,
+  nickname VARCHAR(64) DEFAULT NULL,
+  dep_id INT DEFAULT NULL,
+  pos_id VARCHAR(64) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS t_goview_project (
+  id VARCHAR(64) NOT NULL PRIMARY KEY,
+  project_name VARCHAR(255) DEFAULT NULL,
+  state INT DEFAULT NULL,
+  create_time VARCHAR(32) DEFAULT NULL,
+  create_user_id VARCHAR(64) DEFAULT NULL,
+  is_delete INT DEFAULT 0,
+  index_image VARCHAR(512) DEFAULT NULL,
+  remarks VARCHAR(512) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS t_goview_project_data (
+  id VARCHAR(64) NOT NULL PRIMARY KEY,
+  project_id VARCHAR(64) DEFAULT NULL,
+  create_time VARCHAR(32) DEFAULT NULL,
+  create_user_id VARCHAR(64) DEFAULT NULL,
+  content LONGTEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS t_sys_file (
+  id VARCHAR(64) NOT NULL PRIMARY KEY,
+  file_name VARCHAR(255) DEFAULT NULL,
+  file_size INT DEFAULT NULL,
+  file_suffix VARCHAR(32) DEFAULT NULL,
+  virtual_key VARCHAR(64) DEFAULT NULL,
+  relative_path VARCHAR(512) DEFAULT NULL,
+  absolute_path VARCHAR(512) DEFAULT NULL,
+  create_time VARCHAR(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO t_sys_user (id, username, password, nickname, dep_id, pos_id)
+SELECT '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin', NULL, NULL
+WHERE NOT EXISTS (SELECT 1 FROM t_sys_user WHERE username = 'admin');

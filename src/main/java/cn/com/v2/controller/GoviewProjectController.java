@@ -70,7 +70,7 @@ public class GoviewProjectController  extends BaseController{
 		IPage<GoviewProject> iPages=iGoviewProjectService.page(page, new LambdaQueryWrapper<GoviewProject>());
 		ResultTable resultTable=new ResultTable();
 		resultTable.setData(iPages.getRecords());
-		resultTable.setCode(200);
+		resultTable.setCode(0);
 		resultTable.setCount(iPages.getTotal());
 		resultTable.setMsg("获取成功");
 		return resultTable;
@@ -189,7 +189,7 @@ public class GoviewProjectController  extends BaseController{
 	@ApiOperation(value = "保存项目数据", notes = "保存项目数据")
 	@PostMapping("/save/data")
 	@ResponseBody
-	public AjaxResult saveData(GoviewProjectData data) {
+	public AjaxResult saveData(@RequestBody GoviewProjectData data) {
 		
 		GoviewProject goviewProject= iGoviewProjectService.getById(data.getProjectId());
 		if(goviewProject==null) {
@@ -199,11 +199,15 @@ public class GoviewProjectController  extends BaseController{
 		if(goviewProjectData!=null) {
 			 data.setId(goviewProjectData.getId());
 			 iGoviewProjectDataService.updateById(data);
-			 return success("数据保存成功");
 		}else {
 			iGoviewProjectDataService.save(data);
-			return success("数据保存成功");
 		}
+		// 保存大屏内容后保持未发布状态
+		LambdaUpdateWrapper<GoviewProject> stateWrapper=new LambdaUpdateWrapper<GoviewProject>();
+		stateWrapper.eq(GoviewProject::getId, goviewProject.getId());
+		stateWrapper.set(GoviewProject::getState, -1);
+		iGoviewProjectService.update(stateWrapper);
+		return success("数据保存成功");
 	}
 	
 	/**
