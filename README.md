@@ -16,4 +16,4 @@ v2>fileurl值
 v2>httpurl值
 
 
-httpurl为图片上传的访问地址
+httpurl为图片上传的访问地址 000
