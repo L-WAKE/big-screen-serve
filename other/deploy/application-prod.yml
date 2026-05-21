@@ -1,0 +1,25 @@
+# 服务器生产配置 - 放到 go-view-serve 同目录，启动时: --spring.profiles.active=prod
+# 并复制为 src/main/resources/application-prod.yml 后打包，或服务器用外部配置覆盖
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/goview?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: 请改成服务器MySQL密码
+    druid:
+      initial-size: 5
+      max-active: 50
+      min-idle: 5
+      max-wait: 40000
+
+v2:
+  oss: file:/opt/big-screen-service/upload/
+  fileurl: /opt/big-screen-service/upload
+  httpurl: https://screen.liulaoban.online/
+  defaultFormat: .png
+
+server:
+  port: 8083
+
+spring.devtools.restart.enabled: false

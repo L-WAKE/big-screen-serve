@@ -82,7 +82,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         
         String[] excludePatterns = new String[]{"/error","/error.html","/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**",
                 "/api", "/api-docs", "/api-docs/**", "/doc.html/**",
-                "/api/file/*"};
+                "/api/file/*", "/api/chart/**"};
         
         //添加不拦截路径
         registration.excludePathPatterns(excludePatterns);

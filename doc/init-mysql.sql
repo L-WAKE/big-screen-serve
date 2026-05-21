@@ -43,3 +43,25 @@ CREATE TABLE IF NOT EXISTS t_sys_file (
 INSERT INTO t_sys_user (id, username, password, nickname, dep_id, pos_id)
 SELECT '1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin', NULL, NULL
 WHERE NOT EXISTS (SELECT 1 FROM t_sys_user WHERE username = 'admin');
+
+-- 横向柱状图 SQL 动态请求演示表
+CREATE TABLE IF NOT EXISTS t_chart_bar_crossrange (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  product VARCHAR(64) NOT NULL COMMENT '类目/区域',
+  data1 INT NOT NULL DEFAULT 0 COMMENT '数据项1',
+  data2 INT NOT NULL DEFAULT 0 COMMENT '数据项2',
+  sort_order INT NOT NULL DEFAULT 0 COMMENT '排序',
+  create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='横向柱状图演示数据';
+
+INSERT INTO t_chart_bar_crossrange (product, data1, data2, sort_order)
+SELECT * FROM (
+  SELECT '华东' AS product, 320 AS data1, 280 AS data2, 1 AS sort_order UNION ALL
+  SELECT '华南', 250, 210, 2 UNION ALL
+  SELECT '华北', 180, 160, 3 UNION ALL
+  SELECT '西南', 140, 120, 4 UNION ALL
+  SELECT '西北', 110, 95, 5 UNION ALL
+  SELECT '东北', 85, 70, 6 UNION ALL
+  SELECT '华中', 200, 175, 7
+) AS demo
+WHERE NOT EXISTS (SELECT 1 FROM t_chart_bar_crossrange LIMIT 1);

@@ -95,6 +95,10 @@ mybatis-plus:
     cache-enabled: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
+# 图表公共接口演示 token（GoView 请求头 Header 中配置同名 key）
+goview:
+  chart-demo-token: goview-bar-demo-token
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token: 
     # token名称 (同时也是cookie名称)
     token-name: satoken
